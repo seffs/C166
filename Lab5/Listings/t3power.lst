@@ -1,0 +1,53 @@
+C166 COMPILER V7.55, T3POWER                                                               07/18/2020 14:34:06 PAGE 1   
+
+
+C166 COMPILER V7.55, COMPILATION OF MODULE T3POWER
+OBJECT MODULE PLACED IN .\Objects\t3power.obj
+COMPILER INVOKED BY: C:\Keil_v5\C166\BIN\C166.EXE t3power.c MODV2 BROWSE MODV2 DEBUG PRINT(.\Listings\t3power.lst) TABS(
+                    -2) OBJECT(.\Objects\t3power.obj) 
+
+ stmt lvl     source
+
+    1         #include "XE164F_HS.h"
+    2         #include "t3power.h"
+    3         
+    4         
+    5         void t3power(void)
+    6         {
+    7  1        unsigned int PWD, temp;
+    8  1       
+    9  1          SCU_SLC = 0xAAAA;            
+   10  1          SCU_SLC = 0x5554;              
+   11  1      
+   12  1          PWD = SCU_SLS & 0x00FF;
+   13  1          PWD = (~PWD) & 0x00FF;
+   14  1      
+   15  1          SCU_SLC = 0x9600 | PWD;    
+   16  1          SCU_SLC = 0x0000;                
+   17  1      
+   18  1          
+   19  1        GPT12E_KSCCFG = 3;
+   20  1        temp = GPT12E_KSCCFG;
+   21  1      
+   22  1      }
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =          54     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =    --------     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =    --------     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

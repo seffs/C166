@@ -1,0 +1,109 @@
+C166 COMPILER V7.55, AUFGABE_2                                                             07/15/2020 21:59:42 PAGE 1   
+
+
+C166 COMPILER V7.55, COMPILATION OF MODULE AUFGABE_2
+OBJECT MODULE PLACED IN .\Objects\Aufgabe_2.obj
+COMPILER INVOKED BY: C:\Keil_v5\C166\BIN\C166.EXE Aufgabe_2.c MODV2 BROWSE FLOAT64 MODV2 MODV2 DEBUG CODE SYMBOLS PRINT(
+                    -.\Listings\Aufgabe_2.lst) TABS(2) PREPRINT(.\Listings\Aufgabe_2.i) OBJECT(.\Objects\Aufgabe_2.obj) 
+
+ stmt lvl     source
+
+    1         #include "hardware.h"
+    2         
+    3         void portInit(){
+    4  1        
+    5  1        DP2 = 0x0;
+    6  1        DP2 |= LED_1;
+    7  1        DP2 |= LED_2;
+    8  1        DP2 |= LED_3;
+    9  1        
+   10  1      }
+   11         
+   12         void main(void) 
+   13         {
+   14  1        portInit();
+   15  1        
+   16  1        while(1) {
+   17  2          P2 = ((P2&Taster_1)<<(LED1_PORT-T1_PORT))|(P2&~LED_1);
+   18  2          P2 = ((P2&Taster_2)<<(LED2_PORT-T2_PORT))|(P2&~LED_2);
+   19  2          // 1. Prüfen, ob Taster eingedrückt wird
+   20  2          // 2. Lösung nach der Bitposition vom LED schieben
+   21  2          // 3. Alte LED Bit löschen und neues Ereignis einsetzen
+   22  2        }
+   23  1      }
+C166 COMPILER V7.55, AUFGABE_2                                                             07/15/2020 21:59:42 PAGE 2   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION portInit (BEGIN  RMASK = @0x8000)
+                                           ; SOURCE LINE # 3
+                                           ; SOURCE LINE # 5
+0000 E6E10000      MOV       __Sfr?FFC2,#00H
+                                           ; SOURCE LINE # 6
+0004 76E11000      OR        __Sfr?FFC2,#010H
+                                           ; SOURCE LINE # 7
+0008 76E12000      OR        __Sfr?FFC2,#020H
+                                           ; SOURCE LINE # 8
+000C 76E14000      OR        __Sfr?FFC2,#040H
+                                           ; SOURCE LINE # 10
+0010 CB00          RET       
+             ; FUNCTION portInit (END    RMASK = @0x8000)
+
+             ; FUNCTION main (BEGIN  RMASK = @0x4030)
+                                           ; SOURCE LINE # 12
+                                           ; SOURCE LINE # 14
+0012 BBF6          CALLR     portInit
+                                           ; SOURCE LINE # 16
+0014         ?C0003:
+                                           ; SOURCE LINE # 17
+0014 F2F5C0FF      MOV       R5,0FFC0H
+0018 6851          AND       R5,#01H
+001A 5C45          SHL       R5,#04H
+001C F2F4C0FF      MOV       R4,0FFC0H
+0020 4EF4          BCLR      R4.4
+0022 7045          OR        R4,R5
+0024 F6F4C0FF      MOV       __Sfr?FFC0,R4
+                                           ; SOURCE LINE # 18
+0028 F2F5C0FF      MOV       R5,0FFC0H
+002C 6852          AND       R5,#02H
+002E 5C45          SHL       R5,#04H
+0030 F2F4C0FF      MOV       R4,0FFC0H
+0034 5EF4          BCLR      R4.5
+0036 7045          OR        R4,R5
+0038 F6F4C0FF      MOV       __Sfr?FFC0,R4
+                                           ; SOURCE LINE # 22
+003C 0DEB          JMPR      cc_UC,?C0003
+             ; FUNCTION main (END    RMASK = @0x4030)
+
+C166 COMPILER V7.55, AUFGABE_2                                                             07/15/2020 21:59:42 PAGE 3   
+
+NAME                                    CLASS    SPACE  TYPE   OFFSET   SIZE
+----------------------------------------------------------------------------
+
+
+__Sfr?FFC2 . . . . . . . . . . . . . .  sfr             uint   FFC2H    2
+__Sfr?FFC0 . . . . . . . . . . . . . .  sfr             uint   FFC0H    2
+portInit . . . . . . . . . . . . . . .  public   NCODE  funct  -----    
+main . . . . . . . . . . . . . . . . .  public   NCODE  funct  -----    
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =          62     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =    --------     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =    --------     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

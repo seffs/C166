@@ -1,0 +1,131 @@
+;$NONSEGMENTED              ; Nur Tiny Model möglich
+$MODV2                 ; Code fuer 161/163/164/165/167
+$NOLIST
+$INCLUDE (REG167.INC)   ; include CPU definition file 
+$LIST
+;
+;	TITLE <LEDS!>
+;
+;	Prozessor Definitionen
+;
+;------------------------------------------------------------
+; Hier folgen Ihre Konstanten Definitionen
+;
+Ora     	EQU	0	;Portbit für Ora
+
+Taster_1 	EQU	P2.0
+Taster_2 	EQU	P2.1
+Schalter_1 	EQU P2.2
+Schalter_2 	EQU	P2.3	
+LED_1		EQU P2.4
+LED_2 		EQU P2.5
+LED_3 		EQU P2.6
+Dauer 		EQU 5000
+
+Datenspeicher	SECTION Data
+;------------------------------------------------------------
+; Hier folgen Ihre Speicher Vereinbarungen
+;
+Mein_Speicher           DB      12      ;Byte Initialisiert
+Mein_Speicher1          DW      65      ;Word Initialisiert
+Mein_Speicher2          DD      4711
+Mein_Text               DB      'ASCII Text'
+
+Systemtime				DW		764
+
+
+
+Datenspeicher	ENDS
+;
+;
+Programme	Section Code
+ASSUME	DPP3:SYSTEM
+ASSUME  DPP0:Datenspeicher
+;------------------------------------------------------------
+; Hier stehen Ihre Unterprogramme
+;
+;
+;PInit	Initialisiert den Port Px
+;=====
+;	I: nix
+;	O: nix
+;	Z: Register, die zerstört werden.
+;
+MyUp1	PROC NEAR
+
+	Ret
+MyUp1	EndP;
+
+PortInit PROC
+		;Eingangsporte einrichten(=0)
+		bclr DP2.0
+		bclr DP2.1	
+		bclr DP2.2
+		bclr DP2.3
+		;Ausgangsporte einrichten(=1)
+		bset DP2.4
+		bset DP2.5
+		bset DP2.6
+	Ret
+PortInit EndP;
+	
+Delay	PROC 
+		PUSH 	R0
+		PUSH	R1
+		
+		MOV		R0,#Dauer
+		MOV		R1,Systemtime
+	Warte:
+		CMPD1 	R0,#0
+		JMP		cc_NZ,Warte
+		;Counter still counting
+		CMPD1 	R1,#0
+		JMP		cc_NZ,Warte
+		
+		POP		R1
+		POP		R0
+		Ret
+	Ret
+Delay	EndP;
+
+;------------------------------------------------------------
+; Hier startet das Hauptprogramm
+;
+A_RESET	PROC TASK STARTUP INTNO RESET = 0
+	mov	r0,BUSCON0
+	and	r0,#0xFF00
+	mov	BUSCON0,r0
+	mov	dpp0,#PAG Datenspeicher		;Page von Datenspeicher => DPP0
+	mov 	KSCCFG,#0x0003;     		;Module Enable
+	mov 	R0,KSCCFG			;wieder ruecklesen
+	JMP	Main	
+A_RESET	EndP
+
+MAIN	Proc
+;------------------------------------------------------------
+;Hier geht Ihr Hauptprogramm los
+;
+	Call	MyUp1	
+	Call	PortInit
+	DISWDT
+
+Forever:
+	BMOV 	LED_1, Taster_1
+	BMOV 	LED_2, Taster_2
+	BSET 	LED_3
+	Call 	Delay
+	BCLR 	LED_3
+	Call 	Delay
+	
+jmp		Forever
+;
+;  Notstop
+;
+StopJetzt:	JMP	StopJetzt
+
+Main		ENDP
+
+Programme	ENDS
+;
+
+	END

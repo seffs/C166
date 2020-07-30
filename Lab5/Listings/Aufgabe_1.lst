@@ -1,0 +1,56 @@
+C166 COMPILER V7.55, AUFGABE_1                                                             07/26/2020 12:44:26 PAGE 1   
+
+
+C166 COMPILER V7.55, COMPILATION OF MODULE AUFGABE_1
+OBJECT MODULE PLACED IN .\Objects\Aufgabe_1.obj
+COMPILER INVOKED BY: C:\Keil_v5\C166\BIN\C166.EXE Aufgabe_1.c MODV2 BROWSE MODV2 MODV2 DEFINE(TEIL_D2) DEBUG PRINT(.\Lis
+                    -tings\Aufgabe_1.lst) TABS(2) OBJECT(.\Objects\Aufgabe_1.obj) 
+
+ stmt lvl     source
+
+    1         #include "hardware.h"
+    2         #include "t3power.c"
+    3         
+    4         void T3Init(void){
+    5  1        T4CON = 0x27;
+    6  1        T3CON = 0x82;
+    7  1        T4 = 0xF424;
+    8  1        //T3CON |= (1<<6);
+    9  1        T3R = 1;
+   10  1      
+   11  1      }
+   12         
+   13         int systemzeit;
+   14         
+   15         void main(void) 
+   16         {
+   17  1        t3power();
+   18  1        T3Init();
+   19  1        while (1) {
+   20  2          if (T3CON & (1<<10)) {
+   21  3            systemzeit += 100;
+   22  3            T3CON &= ~(1<<10);
+   23  3          }
+   24  2        }
+   25  1      }
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =          96     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =           2     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =    --------     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

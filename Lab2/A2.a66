@@ -1,0 +1,175 @@
+;$NONSEGMENTED              ; Nur Tiny Model möglich
+$MODV2                 ; Code fuer 161/163/164/165/167
+$NOLIST
+$INCLUDE (REG167.INC)   ; include CPU definition file 
+$LIST
+;
+;	TITLE <Mein Text>
+;
+;	Prozessor Definitionen
+;
+;------------------------------------------------------------
+; Hier folgen Ihre Konstanten Definitionen
+;
+
+	
+Datenspeicher	SECTION Data
+;------------------------------------------------------------
+; Hier folgen Ihre Speicher Vereinbarungen
+;
+op1				DW		30000
+op2				DW		5000
+op3				DW		40000
+op4				DW		4999
+op5				DW		-30000
+MyVar32_01		DW		(120000 AND 0xFFFF)
+				DW		(120000 SHR 16)
+MyVar32_02		DW		(75000 AND 0xFFFF)
+				DW		(75000 SHR 16)
+Datenspeicher	ENDS
+;
+;
+Programme	Section Code
+ASSUME	DPP3:SYSTEM
+ASSUME  DPP0:Datenspeicher
+;------------------------------------------------------------
+; Hier stehen Ihre Unterprogramme
+;
+add16 PROC
+;Zuerst retten
+PUSH R0
+PUSH R1
+;Addition fortfahren
+MOV R2, [R0]
+ADD R2, [R1]
+;Zuletzt restaurieren
+POP R1
+POP R0
+;Zurück zum Hauptprogramm
+RET
+add16 ENDP
+;
+;
+add32 PROC
+;Zuerst retten
+PUSH R0
+PUSH R1
+;Addition fortfahren
+MOV R2,[R0+] ;untere Bits
+ADD R2,[R1+] ;untere Bits addieren
+MOV R3,[R0]  ;obere Bits
+ADDC R3,[R1] ;obere Bits addieren
+;Zuletzt restaurieren
+POP R1
+POP R0
+;Zurück zum Hauptprogramm
+RET
+add32 ENDP
+;
+;
+sub32 PROC
+;Zuerst retten
+PUSH R0
+PUSH R1
+;Addition fortfahren
+MOV R2,[R0+] ;untere Bits
+SUB R2,[R1+] ;untere Bits addieren
+MOV R3,[R0]  ;obere Bits
+SUBC R3,[R1] ;obere Bits addieren
+;Zuletzt restaurieren
+POP R1
+POP R0
+;Zurück zum Hauptprogramm
+RET
+sub32 ENDP
+;
+;PInit	Initialisiert den Port Px
+;=====
+;	I: nix
+;	O: nix
+;	Z: Register, die zerstört werden.
+;
+MyUp1	PROC NEAR
+
+	Ret
+MyUp1	EndP;
+
+
+
+;------------------------------------------------------------
+; Hier startet das Hauptprogramm
+;
+A_RESET	PROC TASK STARTUP INTNO RESET = 0
+	mov	r0,BUSCON0
+	and	r0,#0xFF00
+	mov	BUSCON0,r0
+	mov	dpp0,#PAG Datenspeicher		;Page von Datenspeicher => DPP0
+	mov 	KSCCFG,#0x0003;     		;Module Enable
+	mov 	R0,KSCCFG			;wieder ruecklesen
+	JMP	Main	
+A_RESET	EndP
+
+MAIN	Proc
+;------------------------------------------------------------
+;Hier geht Ihr Hauptprogramm los
+;
+	Call	MyUp1	
+	
+	DISWDT	; Disable Watchdog
+Forever:
+	mov R1,op1
+	mov R2,op2
+	mov R3,op3
+	mov R4,op4
+	mov R5,op5
+	;
+	mov R10,R1
+	add R10,R2
+	mov R11,R1
+	add	R11,R3
+	mov R12,R4
+	sub R12,R2
+	mov R13,R1
+	add	R13,R5
+	mov	R14,R3
+	add	R14,R5
+	;r10
+	mov R0,#op1
+	mov R1,#op2
+	call add16
+	;r11
+	mov R0,#op1
+	mov R1,#op3
+	call add16
+	;r13
+	mov R0,#op1
+	mov R1,#op5
+	call add16
+	;r14
+	mov R0,#op3
+	mov R1,#op5
+	call add16
+	;120000+75000
+	mov R0,#MyVar32_01
+	mov R1,#MyVar32_02
+	call add32
+	;120000-75000
+	mov R0,#MyVar32_01
+	mov R1,#MyVar32_02
+	call sub32
+	;75000-120000
+	mov R0,#MyVar32_02
+	mov R1,#MyVar32_01
+	call sub32
+	jmp		Forever
+;
+;  Notstop
+;
+StopJetzt:	JMP	StopJetzt
+
+Main		ENDP
+
+Programme	ENDS
+;
+
+	END

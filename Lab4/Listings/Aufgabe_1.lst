@@ -1,0 +1,234 @@
+C166 COMPILER V7.55, AUFGABE_1                                                             07/15/2020 23:12:17 PAGE 1   
+
+
+C166 COMPILER V7.55, COMPILATION OF MODULE AUFGABE_1
+OBJECT MODULE PLACED IN .\Objects\Aufgabe_1.obj
+COMPILER INVOKED BY: C:\Keil_v5\C166\BIN\C166.EXE Aufgabe_1.c MODV2 BROWSE FLOAT64 MODV2 MODV2 DEFINE(TEIL_A) DEBUG CODE
+                    - SYMBOLS PRINT(.\Listings\Aufgabe_1.lst) TABS(2) PREPRINT(.\Listings\Aufgabe_1.i) OBJECT(.\Objects\Aufgabe_1.obj) 
+
+ stmt lvl     source
+
+    1         
+    2         /***********************************************************************************************
+    3         * Mit dieser Vorlage koennen Sie die einzelnen Teilaufgaben bei der Abnahme schnell anwaehlen  *
+    4         * Der Quelltext von Aufgabe a ist schon eingetragen. Für die anderen Teilaufgaben kopieren Sie *
+    5         * diesen Quelltext in die entsprechenden Bereiche der Vorlage und modifizieren ihn.            *
+    6         *                                                                                              *
+    7         * Welcher Quelltext dann übersetzt werden soll, bestimmen Sie in den Target Options / C166     *
+    8         * Dort tragen Sie im Feld "Define:" einfach "TEIL_A" oder "TEIL_B" oder "TEIL_C" usw. ein.     *
+    9         ***********************************************************************************************/
+   10         
+   11         
+   12         #ifdef TEIL_A //Teilaufgabe a)
+   13         
+   14         void main(void) {
+   15  1        int fahr, celsius;
+   16  1        int lower, upper,step;
+   17  1      
+   18  1        lower = 0;
+   19  1        upper = 300;
+   20  1        step = 20;
+   21  1      
+   22  1      
+   23  1        fahr = lower;
+   24  1        while (fahr <= upper)
+   25  1        {
+   26  2          celsius = 5 * (fahr-32) / 9;
+   27  2          fahr = fahr + step;
+   28  2        }
+   29  1      }
+   30         
+   31         #endif //Teilaufgabe a)
+   32         
+   33         #ifdef TEIL_B  //Teilaufgabe b)
+              int celsius;
+              
+              void main(void) {
+                int fahr;
+                int lower, upper,step;
+              
+                lower = 0;
+                upper = 300;
+                step = 20;
+              
+              
+                fahr = lower;
+                while (fahr <= upper) 
+                {
+                  celsius = 5 * (fahr-32) / 9;
+                  fahr = fahr + step;
+                }
+              }
+              
+              #endif //Teilaufgabe b)
+   54         
+C166 COMPILER V7.55, AUFGABE_1                                                             07/15/2020 23:12:17 PAGE 2   
+
+   55         #ifdef TEIL_C //Teilaufgabe c)
+              int celsius;
+              
+              int fahr2cels(int fahr){
+                   return 5 * (fahr-32) / 9; 
+              }
+              
+              void main(void) {
+                int fahr;
+                int lower, upper,step;
+              
+                lower = 0;
+                upper = 300;
+                step = 20;
+              
+              
+                fahr = lower;
+                while (fahr <= upper) 
+                {
+                  celsius = fahr2cels(fahr);
+                  fahr = fahr + step;
+                }
+              }
+              
+              #endif //Teilaufgabe c)
+   80         
+   81         
+   82         #ifdef TEIL_D1 //Teilaufgabe d) mit long
+              long celsius;
+              
+              long fahr2cels(long fahr){
+                   return 5 * (fahr-32) / 9; 
+              }
+              
+              void main(void) {
+                long fahr;
+                int lower, upper,step;
+              
+                lower = 0;
+                upper = 300;
+                step = 20;
+              
+              
+                fahr = lower;
+                while (fahr <= upper) 
+                {
+                  celsius = fahr2cels(fahr);
+                  fahr = fahr + step;
+                }
+              }
+              
+              #endif //Teilaufgabe d) mit long
+  107         
+  108         #ifdef TEIL_D2 //Teilaufgabe d) mit float
+              float celsius;
+              
+              float fahr2cels(float fahr){
+                   return 5 * (fahr-32) / 9; 
+              }
+              
+              void main(void) {
+                float fahr;
+C166 COMPILER V7.55, AUFGABE_1                                                             07/15/2020 23:12:17 PAGE 3   
+
+                int lower, upper,step;
+              
+                lower = 0;
+                upper = 300;
+                step = 20;
+              
+              
+                fahr = lower;
+                while (fahr <= upper) 
+                {
+                  celsius = fahr2cels(fahr);
+                  fahr = fahr + step;
+                }
+              }
+              
+              #endif //Teilaufgabe d) mit float
+  133         
+  134         #ifdef TEIL_D3 //Teilaufgabe d) mit double
+              double celsius;
+              
+              double fahr2cels(double fahr){
+                   return 5 * (fahr-32) / 9; 
+              }
+              
+              void main(void) {
+                double fahr;
+                int lower, upper,step;
+              
+                lower = 0;
+                upper = 300;
+                step = 20;
+              
+              
+                fahr = lower;
+                while (fahr <= upper) 
+                {
+                  celsius = fahr2cels(fahr);
+                  fahr = fahr + step;
+                }
+              }
+              
+              #endif //Teilaufgabe d) mit double
+  159         
+  160         
+  161         
+C166 COMPILER V7.55, AUFGABE_1                                                             07/15/2020 23:12:17 PAGE 4   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION main (BEGIN  RMASK = @0x4020)
+                                           ; SOURCE LINE # 14
+                                           ; SOURCE LINE # 18
+                                           ; SOURCE LINE # 19
+                                           ; SOURCE LINE # 20
+                                           ; SOURCE LINE # 23
+0000 E005          MOV       R5,#00H
+;---- Variable 'fahr' assigned to Register 'R5' ----
+                                           ; SOURCE LINE # 24
+0002         ?C0003:
+                                           ; SOURCE LINE # 26
+                                           ; SOURCE LINE # 27
+0002 06F51400      ADD       R5,#014H
+                                           ; SOURCE LINE # 28
+0006 46F52C01      CMP       R5,#012CH
+000A BDFB          JMPR      cc_SLE,?C0003
+000C         ?C0002:
+                                           ; SOURCE LINE # 29
+000C CB00          RET       
+             ; FUNCTION main (END    RMASK = @0x4020)
+
+C166 COMPILER V7.55, AUFGABE_1                                                             07/15/2020 23:12:17 PAGE 5   
+
+NAME                                    CLASS    SPACE  TYPE   OFFSET   SIZE
+----------------------------------------------------------------------------
+
+
+main . . . . . . . . . . . . . . . . .  public   NCODE  funct  -----    
+  fahr . . . . . . . . . . . . . . . .  --reg--         int    -----    2
+  celsius. . . . . . . . . . . . . . .  auto            int       2H    2
+  lower. . . . . . . . . . . . . . . .  auto            int       4H    2
+  upper. . . . . . . . . . . . . . . .  auto            int       6H    2
+  step . . . . . . . . . . . . . . . .  auto            int       8H    2
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =          14     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =    --------     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =    --------     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
